@@ -7,6 +7,7 @@ public class testscript : MonoBehaviour
 {
     private ConfigurableJoint _joint;
     private Rigidbody _rb;
+    [SerializeField]private float _f;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +43,7 @@ public class testscript : MonoBehaviour
 
     void RotateStick(float amount)
     {
-        _rb.AddRelativeTorque(Vector3.right * (amount * 25f), ForceMode.VelocityChange);
-
+        _f = 25f;
+        _rb.AddRelativeTorque(Vector3.right * (amount * _f), ForceMode.VelocityChange);
     }
 }
