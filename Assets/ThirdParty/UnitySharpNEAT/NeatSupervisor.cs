@@ -54,10 +54,10 @@ namespace UnitySharpNEAT
         [Header("Unit Management")]
 
         [SerializeField, Tooltip("The Unit Prefab, which inherits from UnitController, that should be evaluated and spawned.")]
-        private UnitController _unitControllerPrefab = default;
+        protected UnitController _unitControllerPrefab = default;
 
         [SerializeField, Tooltip("The parent transform which will hold the instantiated Units.")]
-        private Transform _spawnParent = default;
+        protected Transform _spawnParent = default;
 
 
         [Header("Debug")]
@@ -67,9 +67,9 @@ namespace UnitySharpNEAT
 
 
         // Object pooling and Unit management
-        private Dictionary<IBlackBox, UnitController> _blackBoxMap = new Dictionary<IBlackBox, UnitController>();
+        protected Dictionary<IBlackBox, UnitController> _blackBoxMap = new Dictionary<IBlackBox, UnitController>();
 
-        private HashSet<UnitController> _unusedUnitsPool = new HashSet<UnitController>();
+        protected HashSet<UnitController> _unusedUnitsPool = new HashSet<UnitController>();
 
         private HashSet<UnitController> _usedUnitsPool = new HashSet<UnitController>();
 
@@ -108,7 +108,7 @@ namespace UnitySharpNEAT
             xmlConfig.LoadXml(textAsset.text);
 
             Experiment = new Experiment();
-            Experiment.Initialize(xmlConfig.DocumentElement, this, _networkInputCount, _networkOutputCount);
+            Experiment.Initialize(xmlConfig.DocumentElement, (TurnamnetNEATSupervisor)this, _networkInputCount, _networkOutputCount);
 
             ExperimentIO.DebugPrintSavePaths(Experiment);
         }
@@ -247,7 +247,7 @@ namespace UnitySharpNEAT
         /// <summary>
         /// Puts Units into either the Unused or the Used object pool.
         /// </summary>
-        private void PoolUnit(UnitController controller, bool markUsed)
+        protected void PoolUnit(UnitController controller, bool markUsed)
         {
             if (markUsed)
             {

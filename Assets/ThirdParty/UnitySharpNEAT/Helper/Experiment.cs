@@ -59,7 +59,7 @@ namespace UnitySharpNEAT
         private string _description;
 
         [SerializeField]
-        private NeatSupervisor _neatSupervisor;
+        private TurnamnetNEATSupervisor _neatSupervisor;
 
         [SerializeField]
         private int _inputCount;
@@ -106,7 +106,7 @@ namespace UnitySharpNEAT
         #endregion
 
         #region FUNCTIONS
-        public void Initialize(XmlElement xmlConfig, NeatSupervisor neatSupervisor, int inputCount, int outputCount)
+        public void Initialize(XmlElement xmlConfig, TurnamnetNEATSupervisor neatSupervisor, int inputCount, int outputCount)
         {
             _name = XmlUtils.TryGetValueAsString(xmlConfig, "ExperimentName");
             _populationSize = XmlUtils.GetValueAsInt(xmlConfig, "PopulationSize");
@@ -172,7 +172,7 @@ namespace UnitySharpNEAT
 
             IGenomeDecoder<NeatGenome, IBlackBox> genomeDecoder = CreateGenomeDecoder();
 
-            IGenomeListEvaluator<NeatGenome> innerEvaluator = new CoroutinedListEvaluator<NeatGenome, IBlackBox>(genomeDecoder, evaluator, _neatSupervisor);
+            IGenomeListEvaluator<NeatGenome> innerEvaluator = new CustomCoroutinedListEvaluator<NeatGenome, IBlackBox>(genomeDecoder, evaluator, _neatSupervisor);
 
             IGenomeListEvaluator<NeatGenome> selectiveEvaluator = new SelectiveGenomeListEvaluator<NeatGenome>(innerEvaluator,
                 SelectiveGenomeListEvaluator<NeatGenome>.CreatePredicate_OnceOnly());

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6618993068225786744}
   - component: {fileID: 8250582391387573785}
   - component: {fileID: 3818341983301503257}
-  m_Layer: 14
+  m_Layer: 6
   m_Name: Stop2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,8 @@ GameObject:
   - component: {fileID: 7763510336218800024}
   - component: {fileID: 7763510336218800027}
   - component: {fileID: 7763510336218800026}
-  m_Layer: 14
+  - component: {fileID: 6335637447763460883}
+  m_Layer: 6
   m_Name: Keeper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +110,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7763510336218800023}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.14, z: 0.588}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -140,7 +141,7 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
+  m_ImplicitCom: 0
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -249,6 +250,20 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &6335637447763460883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763510336218800023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ebaff5086d22f847a18832f720879aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joint: {fileID: 7763510336218800026}
+  rb: {fileID: 7763510336218800027}
 --- !u!1 &9166479822293337176
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +275,7 @@ GameObject:
   - component: {fileID: 5447811410582377714}
   - component: {fileID: 7743491018102970239}
   - component: {fileID: 4678502684323237644}
-  m_Layer: 14
+  m_Layer: 6
   m_Name: Stop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,7 +405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3828009875220112033, guid: ad7ba328ed612a545831c0517ce971b8, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3828009875220112033, guid: ad7ba328ed612a545831c0517ce971b8, type: 3}
       propertyPath: m_TagString
@@ -424,7 +439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5794555179706278035, guid: 703002ae77e56324d979c74749b7b837, type: 3}
       propertyPath: m_Layer
-      value: 14
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5794555179706278039, guid: 703002ae77e56324d979c74749b7b837, type: 3}
       propertyPath: m_RootOrder

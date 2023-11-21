@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using SharpNeat.Phenomes;
@@ -6,14 +7,17 @@ using UnitySharpNEAT;
 
 public class PlayerController : UnitController
 {
+    [SerializeField] private Stick stick;
+
     protected override void UpdateBlackBoxInputs(ISignalArray inputSignalArray)
     {
-        throw new System.NotImplementedException();
+        inputSignalArray[0] = stick.GetStickPosition();
     }
 
     protected override void UseBlackBoxOutpts(ISignalArray outputSignalArray)
     {
-        throw new System.NotImplementedException();
+        var m = (float)outputSignalArray[0];
+        stick.MoveStick(m);
     }
 
     public override float GetFitness()
@@ -23,6 +27,9 @@ public class PlayerController : UnitController
 
     protected override void HandleIsActiveChanged(bool newIsActive)
     {
-        throw new System.NotImplementedException();
+        foreach (Transform t in transform)
+        {
+            t.gameObject.SetActive(newIsActive);
+        }
     }
 }

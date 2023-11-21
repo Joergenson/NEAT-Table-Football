@@ -21,7 +21,7 @@ namespace UnitySharpNEAT
         [SerializeField] private Text _text;
 
         [Header("Settings")]
-        [SerializeField] private float _initialTimeScale = 5f;
+        [SerializeField] private float _initialTimeScale = 1f;
         [SerializeField] private bool _autoLowerTimeScale = true;
         [SerializeField] private float _fpsCheckIntervall = 12;
         [SerializeField] private int _lowerTimeScaleBelowFps = 10;
