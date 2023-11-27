@@ -2,8 +2,8 @@
 
     <Config>
       <ExperimentName>FootballExperiment</ExperimentName>
-      <PopulationSize>10</PopulationSize>
-      <SpecieCount>2</SpecieCount>
+      <PopulationSize>8</PopulationSize>
+      <SpecieCount>4</SpecieCount>
       <Activation>
         <Scheme>Acyclic</Scheme>
       </Activation>

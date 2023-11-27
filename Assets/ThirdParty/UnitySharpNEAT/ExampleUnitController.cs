@@ -55,4 +55,9 @@ public class ExampleUnitController : UnitController
         // Make sure that when IsActive gets set to false, the variables and the Transform of this Unit are reset!
         // Consider to also disable MeshRenderers until IsActive turns true again.
     }
+
+    public override void Move(Transform parent, Vector3 position)
+    {
+        throw new System.NotImplementedException();
+    }
 }

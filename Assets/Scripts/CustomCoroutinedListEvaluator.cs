@@ -47,31 +47,121 @@ public class CustomCoroutinedListEvaluator<TGenome, TPhenome> : IGenomeListEvalu
         yield return EvaluateList(genomeList);
     }
 
+    Dictionary<TGenome, TPhenome> dict = new Dictionary<TGenome, TPhenome>();
+    Dictionary<TGenome, FitnessInfo[]> fitnessDict = new Dictionary<TGenome, FitnessInfo[]>();
+    
 // called by NeatEvolutionAlgorithm at the beginning of a generation
     private IEnumerator EvaluateList(IList<TGenome> genomeList)
     {
         Reset();
 
-        for (int i = 0; i < genomeList.Count; i++)
+        dict = new Dictionary<TGenome, TPhenome>();
+        fitnessDict = new Dictionary<TGenome, FitnessInfo[]>();
+        
+        var organizer = new TournamentOrganizer<TGenome>();
+
+        foreach (var genome in genomeList)
         {
-            TGenome genomeA = genomeList[i];
-            TPhenome phenomeA = _genomeDecoder.Decode(genomeA);
+            organizer.registerAgent(genome);
+        }
+        
+        yield return organizer.simulateFullTournament(1, ActivateUnits);
+        
+        
+        // evaluate the fitness of all phenomes (IBlackBox) during this trial duration.
+        foreach (TGenome genome in dict.Keys)
+        {
+            TPhenome phenome = dict[genome];
 
-            if (phenomeA == null)
+            if (phenome != null)
             {
-                // Non-viable genome.
-                genomeA.EvaluationInfo.SetFitness(0.0);
-                genomeA.EvaluationInfo.AuxFitnessArr = null;
-                continue;
+                _phenomeEvaluator.Evaluate(phenome);
+                FitnessInfo fitnessInfo = _phenomeEvaluator.GetLastFitness(phenome);
+                        
+                fitnessDict[genome][0] = fitnessInfo;
             }
-            
-            _neatSupervisor.ActivateUnit((IBlackBox)phenomeA,true);
+        }
+        
+        foreach (TGenome genome in dict.Keys)
+        {
+            TPhenome phenome = dict[genome];
+            if (phenome != null)
+            {
+                double fitness = 0;
 
-            yield return new WaitForSeconds(5);
-            
-            _neatSupervisor.DeactivateUnit((IBlackBox)phenomeA);
+                for (int i = 0; i < _neatSupervisor.Trials; i++)
+                {
+                    fitness += fitnessDict[genome][i]._fitness;
+                }
+                var fit = fitness;
+                fitness /= _neatSupervisor.Trials; // Averaged fitness
+                    
+                if (fitness > _neatSupervisor.StoppingFitness)
+                {
+                    Utility.Log("Fitness is " + fit + ", stopping now because stopping fitness is " + _neatSupervisor.StoppingFitness);
+                    //  _phenomeEvaluator.StopConditionSatisfied = true;
+                }
+                genome.EvaluationInfo.SetFitness(fitness);
+                genome.EvaluationInfo.AuxFitnessArr = fitnessDict[genome][0]._auxFitnessArr;
+                
+                _neatSupervisor.RemoveBox((IBlackBox)phenome);
+            }
+        }
+        yield return 0;
+    }
+
+    public void InstantiateUnits(TGenome unitA, TGenome unitB, int table)
+    {
+        TPhenome phenomeA = _genomeDecoder.Decode(unitA);
+        
+        if (phenomeA == null)
+        {
+            // Non-viable genome.
+            unitA.EvaluationInfo.SetFitness(0.0);
+            unitA.EvaluationInfo.AuxFitnessArr = null;
+            return;
+        }
+        
+        _neatSupervisor.ActivateUnit((IBlackBox)phenomeA,table,true);
+
+        if (!fitnessDict.ContainsKey(unitA))
+        {
+            fitnessDict.Add(unitA, new FitnessInfo[1]);
+            dict.Add(unitA,phenomeA);
         }
 
+        
+        TPhenome phenomeB = _genomeDecoder.Decode(unitB);
+        
+        if (phenomeB == null)
+        {
+            // Non-viable genome.
+            unitB.EvaluationInfo.SetFitness(0.0);
+            unitB.EvaluationInfo.AuxFitnessArr = null;
+            return;
+        }
+        
+        _neatSupervisor.ActivateUnit((IBlackBox)phenomeB,table,false);
+        if (!fitnessDict.ContainsKey(unitB))
+        {
+            fitnessDict.Add(unitB, new FitnessInfo[1]);
+            dict.Add(unitB,phenomeB);
+        }
+    }
+    
+
+    public IEnumerator ActivateUnits(List<(TournamentOrganizer<TGenome>.Competitor, TournamentOrganizer<TGenome>.Competitor)> matches)
+    {
+
+        for (int i = 0; i < matches.Count; i++)
+        {
+            InstantiateUnits(matches[i].Item1.agent,matches[i].Item2.agent, i);
+        }
+        
+        yield return new WaitForSeconds(60);
+
+        _neatSupervisor.DeactivateAllUnits();
+        
         yield return 0;
     }
 

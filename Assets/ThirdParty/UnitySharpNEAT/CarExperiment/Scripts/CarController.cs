@@ -168,6 +168,11 @@ namespace UnitySharpNEAT
             }
         }
 
+        public override void Move(Transform parent, Vector3 position)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override float GetFitness()
         {
             // calculate a fitness value based on how many laps were driven, how many roads crossed and how many walls touched.

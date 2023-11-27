@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Table
   - Field
+  - Goal
+  - Top
   layers:
   - Default
   - TransparentFX

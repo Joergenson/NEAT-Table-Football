@@ -34,6 +34,7 @@ namespace UnitySharpNEAT
         }
 
         private bool _isActive;
+        public int table;
 
 
         protected virtual void FixedUpdate()
@@ -97,5 +98,7 @@ namespace UnitySharpNEAT
         /// Consider to also disable MeshRenderers until IsActive turns true again.
         /// </summary>
         protected abstract void HandleIsActiveChanged(bool newIsActive);
+
+        public abstract void Move(Transform parent, Vector3 position);
     }
 }

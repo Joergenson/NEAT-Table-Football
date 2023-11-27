@@ -194,7 +194,7 @@ namespace UnitySharpNEAT
         /// Deactivates and resets a Unit. Called after a generation has performed. 
         /// Units don't get Destroyed, instead they are just reset and re-used to avoid unneccessary instantiation calls. This process is called object pooling.
         /// </summary>
-        public void DeactivateUnit(IBlackBox box)
+        public virtual void DeactivateUnit(IBlackBox box)
         {
             if (_blackBoxMap.ContainsKey(box))
             {
@@ -264,7 +264,7 @@ namespace UnitySharpNEAT
         /// <summary>
         /// Destroys all UnitControllers and cleans the Object Pool.
         /// </summary>
-        private void DeactivateAllUnits()
+        protected internal void DeactivateAllUnits()
         {
             Dictionary<IBlackBox, UnitController> _blackBoxMapCopy = new Dictionary<IBlackBox, UnitController>(_blackBoxMap);
 
