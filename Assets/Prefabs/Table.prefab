@@ -2504,6 +2504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 6010634940076774055}
+  ballPrefab: {fileID: 6253801363616887822, guid: a164bbf100bcb1a45807e8630c5359fd, type: 3}
 --- !u!1 &6893137878952558299
 GameObject:
   m_ObjectHideFlags: 0

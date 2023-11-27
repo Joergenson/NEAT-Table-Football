@@ -7,8 +7,6 @@ using UnitySharpNEAT;
 
 public class TurnamnetNEATSupervisor : NeatSupervisor
 {
-    [SerializeField] private Ball ball;
-    private Ball _ballInstance;
     [SerializeField] private PlayerController playerControllerPrefab;
     
     /// <summary>
@@ -16,14 +14,10 @@ public class TurnamnetNEATSupervisor : NeatSupervisor
     /// </summary>
     private UnitController InstantiateUnit(IBlackBox box, int table, bool player1 = true)
     {
-        if (_ballInstance == null)
-        {
-            InstantiateBall();
-        }
         PlayerController controller = Instantiate(playerControllerPrefab);
-        controller.ball = _ballInstance;
         
         MoveTable(controller, table);
+        controller.ball = _tables[table].BallInstance;
         
         if (!player1)
         {
@@ -100,12 +94,6 @@ public class TurnamnetNEATSupervisor : NeatSupervisor
     public void RemoveBox(IBlackBox box)
     {
         _blackBoxMap.Remove(box);
-    }
-
-    public void InstantiateBall()
-    {
-        _ballInstance = Instantiate(ball,ball.resetPos, Quaternion.identity);
-        _ballInstance.ResetBallPositionAndVelocity();
     }
     
 }
