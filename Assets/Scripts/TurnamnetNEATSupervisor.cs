@@ -86,14 +86,16 @@ public class TurnamnetNEATSupervisor : NeatSupervisor
             UnitController controller = _blackBoxMap[box];
             controller.DeactivateUnit();
 
-            _blackBoxMap.Remove(box);
             PoolUnit(controller, false);
         }
     }
 
     public void RemoveBox(IBlackBox box)
     {
-        _blackBoxMap.Remove(box);
+        if (_blackBoxMap.ContainsKey(box))
+        {
+            _blackBoxMap.Remove(box);
+        }
     }
     
 }

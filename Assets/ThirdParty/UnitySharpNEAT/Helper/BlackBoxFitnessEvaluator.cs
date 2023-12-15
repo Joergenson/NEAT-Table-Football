@@ -31,6 +31,7 @@ namespace UnitySharpNEAT
         private NeatSupervisor _neatSupervisor;
 
         private Dictionary<IBlackBox, FitnessInfo> _fitnessByBox = new Dictionary<IBlackBox, FitnessInfo>();
+        private Dictionary<IBlackBox, int> _interactionsByBox = new Dictionary<IBlackBox, int>();
 
         public ulong EvaluationCount
         {
@@ -52,15 +53,37 @@ namespace UnitySharpNEAT
             if (_neatSupervisor != null)
             {
                 float fit = _neatSupervisor.GetFitness(box);
+                int inter = _neatSupervisor.GetInteractions(box);
+                _interactionsByBox.Add(box, inter);
 
                 FitnessInfo fitness = new FitnessInfo(fit, fit);
                 _fitnessByBox.Add(box, fitness);
             }
         }
 
+        public void AddFitness(IBlackBox box, float fit)
+        {
+            if (_neatSupervisor != null)
+            {
+                _neatSupervisor.AddFitness(box, fit);
+            }
+        }
+
         public void Reset()
         {
             _fitnessByBox = new Dictionary<IBlackBox, FitnessInfo>();
+        }
+
+        public int GetInteractions(IBlackBox phenome)
+        {
+            if (_interactionsByBox.ContainsKey(phenome))
+            {
+                int inter = _interactionsByBox[phenome];
+                _interactionsByBox.Remove(phenome);
+                return inter;
+            }
+
+            return 0;
         }
 
         public FitnessInfo GetLastFitness(IBlackBox phenome)

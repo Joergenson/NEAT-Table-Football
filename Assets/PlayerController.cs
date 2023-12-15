@@ -11,7 +11,8 @@ public class PlayerController : UnitController
     [SerializeField] private Stick[] sticks;
     [SerializeField] public Ball ball;
     [SerializeField] private Goal _goal, _ownGoal;
-    
+    private float _fitness;
+
     protected override void UpdateBlackBoxInputs(ISignalArray inputSignalArray)
     {
         inputSignalArray[0] = sticks[0].GetStickPosition();
@@ -55,26 +56,28 @@ public class PlayerController : UnitController
 
     public override float GetFitness()
     {
-        var overallInt = sticks.Sum(t => t.GetInteractions());
-        var interaction_fit = Mathf.Min(overallInt / 10f,1f);
-        
-        var g = _goal.GetGoals();
-        var goal_fit = Mathf.Min(g / 3f, 1f);
-
-        var goals_missed = _ownGoal.GetGoals();
-        var goal_penalty =  Mathf.Min(goals_missed,3);
-
-        var rotationTimes = sticks.Average(t => t.rotationTimer);
-        var rotationPenalty = Mathf.Clamp(0.1f * rotationTimes, 0f, 10f);
-        
-        var fitness = (0.3f * interaction_fit + 0.7f * goal_fit - rotationPenalty - goal_penalty);
-        return Mathf.Max(0f,fitness);
+        // var overallInt = sticks.Sum(t => t.GetInteractions());
+        // var interaction_fit = Mathf.Min(overallInt / 10f,1f);
+        //
+        // var g = _goal.GetGoals();
+        // var goal_fit = Mathf.Min(g / 3f, 1f);
+        //
+        // var goals_missed = _ownGoal.GetGoals();
+        // var goal_penalty =  Mathf.Min(goals_missed,3);
+        //
+        // var rotationTimes = sticks.Average(t => t.rotationTimer);
+        // var rotationPenalty = Mathf.Clamp(0.1f * rotationTimes, 0f, 10f);
+        //
+        // var fitness = (0.3f * interaction_fit + 0.7f * goal_fit - rotationPenalty - goal_penalty);
+        // return Mathf.Max(0f,fitness);
+        return _fitness;
     }
 
     protected override void HandleIsActiveChanged(bool newIsActive)
     {
         if (newIsActive)
         {
+            _fitness = 0;
             foreach (var stick in sticks)
             {
                 stick.rotationTimer = 0;
@@ -100,5 +103,20 @@ public class PlayerController : UnitController
             stick.transform.localPosition = pos;
             stick.joint.autoConfigureConnectedAnchor = true;
         }
+    }
+
+    public override int GetGoals()
+    {
+        return _goal.GetGoals();
+    }
+
+    public override void AddFitness(float fit)
+    {
+        _fitness += fit;
+    }
+
+    public override int GetInteractions()
+    {
+        return sticks.Sum(t => t.GetInteractions());
     }
 }

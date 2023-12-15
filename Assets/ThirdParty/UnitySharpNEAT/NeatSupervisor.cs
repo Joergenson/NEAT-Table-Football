@@ -180,6 +180,29 @@ namespace UnitySharpNEAT
             }
             return 0;
         }
+        
+        public void AddFitness(IBlackBox box, float fit)
+        {
+            if (_blackBoxMap.ContainsKey(box))
+            {
+                _blackBoxMap[box].AddFitness(fit);
+            }
+        }
+        
+        public int GetInteractions(IBlackBox box)
+        {
+            if (_blackBoxMap.ContainsKey(box))
+            {
+                return _blackBoxMap[box].GetInteractions();
+            }
+
+            return 0;
+        }
+
+        public int GetGoals(IBlackBox box)
+        {
+            return _blackBoxMap.ContainsKey(box) ? _blackBoxMap[box].GetGoals() : 0;
+        }
 
         /// <summary>
         /// Creates (or re-uses) a UnitController instance and assigns the Neural Net (IBlackBox) to it and activates it, so that it starts executing the Net.
@@ -201,7 +224,6 @@ namespace UnitySharpNEAT
                 UnitController controller = _blackBoxMap[box];
                 controller.DeactivateUnit();
 
-                _blackBoxMap.Remove(box);
                 PoolUnit(controller, false);
             }
         }
@@ -285,6 +307,10 @@ namespace UnitySharpNEAT
 
             CurrentBestFitness = EvolutionAlgorithm.Statistics._maxFitness;
             CurrentGeneration = EvolutionAlgorithm.CurrentGeneration;
+            if (CurrentGeneration % 10 == 0)
+            {
+                SaveGeneration();
+            }
         }
 
         /// <summary>
@@ -302,5 +328,10 @@ namespace UnitySharpNEAT
             Utility.Log("Total time elapsed: " + (endTime - _startTime));
         }
         #endregion
+
+        void SaveGeneration()
+        {
+            Experiment.SavePopulation(EvolutionAlgorithm.GenomeList, EvolutionAlgorithm.CurrentGeneration);
+        }
     }
 }

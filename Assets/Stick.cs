@@ -10,6 +10,7 @@ public class Stick : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     private int _interactions;
     [SerializeField] public float rotationTimer;
+    private bool _hasCollided;
 
     private void Awake()
     {
@@ -71,5 +72,19 @@ public class Stick : MonoBehaviour
     public int GetInteractions()
     {
         return _interactions;
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.layer == 7 && !_hasCollided)
+        {
+            _hasCollided = true;
+            AddInteraction();
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        _hasCollided = false;
     }
 }

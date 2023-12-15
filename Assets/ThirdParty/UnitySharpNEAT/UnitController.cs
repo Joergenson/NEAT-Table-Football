@@ -100,5 +100,8 @@ namespace UnitySharpNEAT
         protected abstract void HandleIsActiveChanged(bool newIsActive);
 
         public abstract void Move(Transform parent, Vector3 position);
+        public abstract int GetGoals();
+        public abstract void AddFitness(float fit);
+        public abstract int GetInteractions();
     }
 }

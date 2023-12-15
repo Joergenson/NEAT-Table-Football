@@ -3,11 +3,11 @@
     <Config>
       <ExperimentName>FootballExperiment</ExperimentName>
       <PopulationSize>8</PopulationSize>
-      <SpecieCount>4</SpecieCount>
+      <SpecieCount>8</SpecieCount>
       <Activation>
         <Scheme>Acyclic</Scheme>
       </Activation>
       <ComplexityRegulationStrategy>Absolute</ComplexityRegulationStrategy>
-      <ComplexityThreshold>10</ComplexityThreshold>
+      <ComplexityThreshold>16</ComplexityThreshold>
       <Description>Cars learn to race around a race track</Description>
     </Config>

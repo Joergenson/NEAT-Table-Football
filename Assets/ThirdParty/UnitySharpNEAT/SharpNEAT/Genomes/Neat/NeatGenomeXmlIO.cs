@@ -46,6 +46,7 @@ namespace SharpNeat.Genomes.Neat
         const string __AttrId = "id";
         const string __AttrBirthGeneration = "birthGen";
         const string __AttrFitness = "fitness";
+        const string __AttrInteractions = "interactions";
         const string __AttrType = "type";
         const string __AttrSourceId = "src";
         const string __AttrTargetId = "tgt";
@@ -229,6 +230,7 @@ namespace SharpNeat.Genomes.Neat
             xw.WriteAttributeString(__AttrId, genome.Id.ToString(NumberFormatInfo.InvariantInfo));
             xw.WriteAttributeString(__AttrBirthGeneration, genome.BirthGeneration.ToString(NumberFormatInfo.InvariantInfo));
             xw.WriteAttributeString(__AttrFitness, genome.EvaluationInfo.Fitness.ToString("R", NumberFormatInfo.InvariantInfo));
+            xw.WriteAttributeString(__AttrInteractions, genome.EvaluationInfo.Interactions.ToString());
 
             // Emit nodes.
             StringBuilder sb = new StringBuilder();

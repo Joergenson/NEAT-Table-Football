@@ -47,6 +47,7 @@ namespace SharpNeat.Core
         [SerializeField] uint _evaluationCount;
         [SerializeField] uint _evaluationPassCount;
         [SerializeField] AuxFitnessInfo[] _auxFitnessArr;
+        [SerializeField] int _interactions;
 
         #region Constructor
 
@@ -76,6 +77,8 @@ namespace SharpNeat.Core
         {
             get { return (null != _fitnessHistory) ? _fitnessHistory.Mean : _fitness; }
         }
+        
+        public int Interactions => _interactions;
 
         /// <summary>
         /// Gets the fitness from the most recent evaluation. This may be different to the Fitness property if a fitness
@@ -185,5 +188,10 @@ namespace SharpNeat.Core
         }
 
         #endregion
+
+        public void SetInteractions(int i)
+        {
+            _interactions = i;
+        }
     }
 }

@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 6335637447763460883}
   m_Layer: 6
   m_Name: Keeper
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

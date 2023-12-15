@@ -59,6 +59,11 @@ namespace UnitySharpNEAT
         {
             return WriteGenomes(experiment, genomeList, ExperimentFileType.Population);
         }
+        
+        public static bool WritePopulation(INeatExperiment experiment, IList<NeatGenome> genomeList, uint generation)
+        {
+            return WriteGenomes(experiment, genomeList, ExperimentFileType.Population, generation);
+        }
 
         /// <summary>
         /// Writes the specified genome to the champion safe file of the specified experiment (by default: myexperimentname.champ.xml)
@@ -71,12 +76,20 @@ namespace UnitySharpNEAT
         /// <summary>
         /// Writes a list of genomes to the save file fitting the experiment name and the ExperimentFileType.
         /// </summary>
-        private static bool WriteGenomes(INeatExperiment experiment, IList<NeatGenome> genomeList, ExperimentFileType fileType)
+        private static bool WriteGenomes(INeatExperiment experiment, IList<NeatGenome> genomeList, ExperimentFileType fileType, uint generation = 0)
         {
             XmlWriterSettings _xwSettings = new XmlWriterSettings();
             _xwSettings.Indent = true;
 
-            string filePath = GetSaveFilePath(experiment.Name, fileType);
+            string filePath = "";
+            if (generation == 0)
+            {
+                 filePath = GetSaveFilePath(experiment.Name, fileType);
+            }
+            else
+            {
+                filePath = GetSaveFilePath(generation.ToString(), fileType);
+            }
             
             DirectoryInfo dirInf = new DirectoryInfo(Application.persistentDataPath);
             if (!dirInf.Exists)

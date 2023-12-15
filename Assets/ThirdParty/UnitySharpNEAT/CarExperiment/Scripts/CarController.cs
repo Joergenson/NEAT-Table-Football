@@ -173,6 +173,21 @@ namespace UnitySharpNEAT
             throw new System.NotImplementedException();
         }
 
+        public override int GetGoals()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void AddFitness(float fit)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override int GetInteractions()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override float GetFitness()
         {
             // calculate a fitness value based on how many laps were driven, how many roads crossed and how many walls touched.

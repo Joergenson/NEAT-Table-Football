@@ -192,6 +192,11 @@ namespace UnitySharpNEAT
         {
             return ExperimentIO.WritePopulation(this, genomeList);
         }
+        
+        public bool SavePopulation(IList<NeatGenome> genomeList, uint generation)
+        {
+            return ExperimentIO.WritePopulation(this, genomeList, generation);
+        }
 
         /// <summary>
         /// Loads the saved population from the population safe file of this experiment (by default: myexperimentname.pop.xml).

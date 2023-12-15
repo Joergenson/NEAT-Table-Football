@@ -60,4 +60,19 @@ public class ExampleUnitController : UnitController
     {
         throw new System.NotImplementedException();
     }
+
+    public override int GetGoals()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void AddFitness(float fit)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override int GetInteractions()
+    {
+        throw new System.NotImplementedException();
+    }
 }
