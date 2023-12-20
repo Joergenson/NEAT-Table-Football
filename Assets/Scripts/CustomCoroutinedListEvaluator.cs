@@ -51,6 +51,8 @@ public class CustomCoroutinedListEvaluator<TGenome, TPhenome> : IGenomeListEvalu
     Dictionary<TGenome, TPhenome> dict = new Dictionary<TGenome, TPhenome>();
     Dictionary<TGenome, FitnessInfo[]> fitnessDict = new Dictionary<TGenome, FitnessInfo[]>();
     Dictionary<TGenome, int>  interactionDict = new Dictionary<TGenome, int>();
+    Dictionary<TGenome, int>  goalsDict = new Dictionary<TGenome, int>();
+    Dictionary<TGenome, float>  rotationDict = new Dictionary<TGenome, float>();
 
     // called by NeatEvolutionAlgorithm at the beginning of a generation
     private IEnumerator EvaluateList(IList<TGenome> genomeList)
@@ -59,6 +61,9 @@ public class CustomCoroutinedListEvaluator<TGenome, TPhenome> : IGenomeListEvalu
 
         dict = new Dictionary<TGenome, TPhenome>();
         fitnessDict = new Dictionary<TGenome, FitnessInfo[]>();
+        rotationDict = new Dictionary<TGenome, float>();
+        goalsDict = new Dictionary<TGenome, int>();
+        interactionDict = new Dictionary<TGenome, int>();
         
         var organizer = new TournamentOrganizer<TGenome>();
 
@@ -90,6 +95,8 @@ public class CustomCoroutinedListEvaluator<TGenome, TPhenome> : IGenomeListEvalu
                         
                 fitnessDict[genome][0] = fitnessInfo;
                 interactionDict[genome] = _phenomeEvaluator.GetInteractions(phenome);
+                goalsDict[genome] = _phenomeEvaluator.GetGoals(phenome);
+                rotationDict[genome] = _phenomeEvaluator.GetRotationTime(phenome);
             }
         }
         
@@ -114,6 +121,8 @@ public class CustomCoroutinedListEvaluator<TGenome, TPhenome> : IGenomeListEvalu
                 }
                 genome.EvaluationInfo.SetFitness(fitness);
                 genome.EvaluationInfo.SetInteractions(interactionDict[genome]);
+                genome.EvaluationInfo.Goals = goalsDict[genome];
+                genome.EvaluationInfo.RotationTime = rotationDict[genome];
                 genome.EvaluationInfo.AuxFitnessArr = fitnessDict[genome][0]._auxFitnessArr;
                 
                 _neatSupervisor.RemoveBox((IBlackBox)phenome);
@@ -136,6 +145,7 @@ public class CustomCoroutinedListEvaluator<TGenome, TPhenome> : IGenomeListEvalu
         
         _neatSupervisor.ActivateUnit((IBlackBox)phenomeA,table,true);
         _neatSupervisor.AddFitness((IBlackBox)phenomeA,wins);
+        var sticks = _neatSupervisor.GetSticks((IBlackBox)phenomeA);
 
         if (!fitnessDict.ContainsKey(unitA))
         {
@@ -156,6 +166,9 @@ public class CustomCoroutinedListEvaluator<TGenome, TPhenome> : IGenomeListEvalu
         
         _neatSupervisor.ActivateUnit((IBlackBox)phenomeB,table,false);
         _neatSupervisor.AddFitness((IBlackBox)phenomeB,wins2);
+        var sticks2 = _neatSupervisor.GetSticks((IBlackBox)phenomeB);
+        _neatSupervisor.SetSticks((IBlackBox)phenomeA, sticks2);
+        _neatSupervisor.SetSticks((IBlackBox)phenomeB, sticks);
         if (!fitnessDict.ContainsKey(unitB))
         {
             fitnessDict.Add(unitB, new FitnessInfo[1]);
@@ -178,12 +191,14 @@ public class CustomCoroutinedListEvaluator<TGenome, TPhenome> : IGenomeListEvalu
         
         for (int i = 0; i < matches.Count; i++)
         {
-            var box1 =  dict[matches[i].Item1.agent];
-            var box2 =  dict[matches[i].Item2.agent];
+            var phenome =  dict[matches[i].Item1.agent];
+            var phenome2 =  dict[matches[i].Item2.agent];
+            var box = (IBlackBox)phenome;
+            var box2 = (IBlackBox)phenome2;
 
-            int goals1 = _neatSupervisor.GetGoals((IBlackBox)box1);
-            int goals2 = _neatSupervisor.GetGoals((IBlackBox)box2);
-            _phenomeEvaluator.AddFitness(goals1 >= goals2 ? box1 : box2, 1f);
+            int goals1 = _neatSupervisor.GetGoals(box);
+            int goals2 = _neatSupervisor.GetGoals(box2);
+            _phenomeEvaluator.AddFitness(goals1 >= goals2 ? phenome : phenome2, 1f);
             if (goals1 >= goals2)
             {
                 matches[i].Item1.wins++;

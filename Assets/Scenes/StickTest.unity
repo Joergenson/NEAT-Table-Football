@@ -131,6 +131,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3949225799232936064, guid: 124b608755e546e4086521af80cab249, type: 3}
+      propertyPath: sticks.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -3949225799232936064, guid: 124b608755e546e4086521af80cab249, type: 3}
+      propertyPath: sticks.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -3949225799232936064, guid: 124b608755e546e4086521af80cab249, type: 3}
+      propertyPath: sticks.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2347258300191394701, guid: 124b608755e546e4086521af80cab249, type: 3}
       propertyPath: m_Name
       value: Agent
@@ -176,7 +188,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5031070543309752142, guid: 124b608755e546e4086521af80cab249, type: 3}
+    - {fileID: 1218793800487474004, guid: 124b608755e546e4086521af80cab249, type: 3}
+    - {fileID: 1296744160857470381, guid: 124b608755e546e4086521af80cab249, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 124b608755e546e4086521af80cab249, type: 3}

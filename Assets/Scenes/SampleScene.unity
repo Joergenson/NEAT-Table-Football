@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _experimentConfigFileName: FootballExperiment.config
-  _networkInputCount: 18
+  _networkInputCount: 30
   _networkOutputCount: 8
   Trials: 1
   TrialDuration: 20
@@ -161,7 +161,6 @@ MonoBehaviour:
   _unitControllerPrefab: {fileID: -3949225799232936064, guid: 124b608755e546e4086521af80cab249, type: 3}
   _spawnParent: {fileID: 0}
   _enableDebugLogging: 0
-  ball: {fileID: 6253801363616887822, guid: a164bbf100bcb1a45807e8630c5359fd, type: 3}
   playerControllerPrefab: {fileID: -3949225799232936064, guid: 124b608755e546e4086521af80cab249, type: 3}
   _tablePrefab: {fileID: 2110711431662463296, guid: 1a3ab31cdde3dea49b0439c889930459, type: 3}
 --- !u!4 &207310895

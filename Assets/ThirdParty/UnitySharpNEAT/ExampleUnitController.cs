@@ -75,4 +75,19 @@ public class ExampleUnitController : UnitController
     {
         throw new System.NotImplementedException();
     }
+
+    public override float GetRotationTime()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override Stick[] GetSticks()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void SetEnemySticks(Stick[] enemySticks)
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -103,5 +103,8 @@ namespace UnitySharpNEAT
         public abstract int GetGoals();
         public abstract void AddFitness(float fit);
         public abstract int GetInteractions();
+        public abstract float GetRotationTime();
+        public abstract Stick[] GetSticks();
+        public abstract void SetEnemySticks(Stick[] enemySticks);
     }
 }

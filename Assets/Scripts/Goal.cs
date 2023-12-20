@@ -19,4 +19,9 @@ public class Goal : MonoBehaviour
     {
         return _goals;
     }
+
+    public void SetGoals(int i)
+    {
+        _goals = i;
+    }
 }

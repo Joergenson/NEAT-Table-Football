@@ -188,6 +188,21 @@ namespace UnitySharpNEAT
             throw new System.NotImplementedException();
         }
 
+        public override float GetRotationTime()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override Stick[] GetSticks()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void SetEnemySticks(Stick[] enemySticks)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override float GetFitness()
         {
             // calculate a fitness value based on how many laps were driven, how many roads crossed and how many walls touched.

@@ -156,6 +156,9 @@ namespace SharpNeat.Core
             get { return _fitnessHistoryLength; }
         }
 
+        public int Goals { get; set; }
+        public float RotationTime { get; set; }
+
         #endregion
 
         #region Public Methods

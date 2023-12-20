@@ -57,5 +57,7 @@ namespace SharpNeat.Core
 
         void AddFitness(TPhenome phenome,float f);
         int GetInteractions(TPhenome phenome);
+        int GetGoals(TPhenome phenome);
+        float GetRotationTime(TPhenome phenome);
     }
 }

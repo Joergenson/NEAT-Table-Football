@@ -8,9 +8,9 @@ public class Stick : MonoBehaviour
 {
     [SerializeField] public ConfigurableJoint joint;
     [SerializeField] private Rigidbody rb;
-    private int _interactions;
     [SerializeField] public float rotationTimer;
     private bool _hasCollided;
+    public int interactions;
 
     private void Awake()
     {
@@ -22,11 +22,14 @@ public class Stick : MonoBehaviour
     {
         if (transform.localPosition.x > joint.linearLimit.limit)
         {
-            transform.localPosition = new Vector3(joint.linearLimit.limit, transform.localPosition.y, transform.localPosition.z);
+            transform.localPosition = new Vector3(joint.linearLimit.limit, transform.localPosition.y,
+                transform.localPosition.z);
         }
+
         if (transform.position.x < -joint.linearLimit.limit)
         {
-            transform.localPosition = new Vector3(-joint.linearLimit.limit, transform.localPosition.y, transform.localPosition.z);
+            transform.localPosition = new Vector3(-joint.linearLimit.limit, transform.localPosition.y,
+                transform.localPosition.z);
         }
 
         bool isRotating = rb.angularVelocity.magnitude > 0.1f;
@@ -36,13 +39,13 @@ public class Stick : MonoBehaviour
             rotationTimer += Time.deltaTime;
         }
     }
-    
+
     public void MoveStick(float namount)
     {
         var amount = namount * 2.0f - 1.0f;
         rb.AddRelativeForce(Vector3.right * (amount * 1f), ForceMode.VelocityChange);
     }
-    
+
     public void RotateStick(float namount)
     {
         var amount = namount * 2.0f - 1.0f;
@@ -51,7 +54,12 @@ public class Stick : MonoBehaviour
 
     public float GetStickPosition()
     {
-        return (transform.position.x + joint.linearLimit.limit) / (2 * joint.linearLimit.limit);
+        return NormalizeXPosition(transform.position.x, -joint.linearLimit.limit, joint.linearLimit.limit);
+    }
+
+    float NormalizeXPosition(float x, float minX, float maxX)
+    {
+        return Mathf.Clamp01((x - minX) / (maxX - minX));
     }
 
     public float GetStickVelocity()
@@ -66,12 +74,12 @@ public class Stick : MonoBehaviour
 
     public void AddInteraction()
     {
-        _interactions++;
+        interactions++;
     }
 
     public int GetInteractions()
     {
-        return _interactions;
+        return interactions;
     }
 
     private void OnCollisionEnter(Collision other)

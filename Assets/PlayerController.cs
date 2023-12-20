@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using SharpNeat.Phenomes;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnitySharpNEAT;
 
 public class PlayerController : UnitController
 {
     [SerializeField] private Stick[] sticks;
+    [SerializeField] private Stick[] _enemySticks;
     [SerializeField] public Ball ball;
     [SerializeField] private Goal _goal, _ownGoal;
     private float _fitness;
@@ -31,15 +33,34 @@ public class PlayerController : UnitController
         inputSignalArray[10] = sticks[3].GetStickVelocity();
         inputSignalArray[11] = sticks[3].GetStickAngularVelocity();
 
+        if (_enemySticks != null)
+        {
+            inputSignalArray[12] = _enemySticks[0].GetStickPosition();
+            inputSignalArray[13] = _enemySticks[0].GetStickVelocity();
+            inputSignalArray[14] = _enemySticks[0].GetStickAngularVelocity();
+            
+            inputSignalArray[15] = _enemySticks[1].GetStickPosition();
+            inputSignalArray[16] = _enemySticks[1].GetStickVelocity();
+            inputSignalArray[17] = _enemySticks[1].GetStickAngularVelocity();
+            
+            inputSignalArray[18] = _enemySticks[2].GetStickPosition();
+            inputSignalArray[19] = _enemySticks[2].GetStickVelocity();
+            inputSignalArray[20] = _enemySticks[2].GetStickAngularVelocity();
+            
+            inputSignalArray[21] = _enemySticks[3].GetStickPosition();
+            inputSignalArray[22] = _enemySticks[3].GetStickVelocity();
+            inputSignalArray[23] = _enemySticks[3].GetStickAngularVelocity();
+        }
+
         var ballPos = ball.GetBallPosition();
-        inputSignalArray[12] = ballPos.x;
-        inputSignalArray[13] = ballPos.y;
-        inputSignalArray[14] = ballPos.z;
+        inputSignalArray[24] = ballPos.x;
+        inputSignalArray[25] = ballPos.y;
+        inputSignalArray[26] = ballPos.z;
 
         var ballVel = ball.GetBallVelocity();
-        inputSignalArray[15] = ballVel.x;
-        inputSignalArray[16] = ballVel.y;
-        inputSignalArray[17] = ballVel.z;
+        inputSignalArray[27] = ballVel.x;
+        inputSignalArray[28] = ballVel.y;
+        inputSignalArray[29] = ballVel.z;
     }
 
     protected override void UseBlackBoxOutpts(ISignalArray outputSignalArray)
@@ -81,6 +102,8 @@ public class PlayerController : UnitController
             foreach (var stick in sticks)
             {
                 stick.rotationTimer = 0;
+                stick.interactions = 0;
+                _goal.SetGoals(0);
             }
         }
         
@@ -118,5 +141,20 @@ public class PlayerController : UnitController
     public override int GetInteractions()
     {
         return sticks.Sum(t => t.GetInteractions());
+    }
+
+    public override float GetRotationTime()
+    {
+        return sticks.Sum(t => t.rotationTimer);
+    }
+
+    public override Stick[] GetSticks()
+    {
+        return sticks;
+    }
+
+    public override void SetEnemySticks(Stick[] enemySticks)
+    {
+        this._enemySticks = enemySticks;
     }
 }

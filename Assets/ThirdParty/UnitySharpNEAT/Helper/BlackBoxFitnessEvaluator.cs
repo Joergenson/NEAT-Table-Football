@@ -32,6 +32,8 @@ namespace UnitySharpNEAT
 
         private Dictionary<IBlackBox, FitnessInfo> _fitnessByBox = new Dictionary<IBlackBox, FitnessInfo>();
         private Dictionary<IBlackBox, int> _interactionsByBox = new Dictionary<IBlackBox, int>();
+        private Dictionary<IBlackBox, int> _goalsByBox = new Dictionary<IBlackBox, int>();
+        private Dictionary<IBlackBox, float> _rotationTimeByBox = new Dictionary<IBlackBox, float>();
 
         public ulong EvaluationCount
         {
@@ -54,7 +56,11 @@ namespace UnitySharpNEAT
             {
                 float fit = _neatSupervisor.GetFitness(box);
                 int inter = _neatSupervisor.GetInteractions(box);
+                int goals = _neatSupervisor.GetGoals(box);
+                float rotationTime = _neatSupervisor.GetRotations(box);
                 _interactionsByBox.Add(box, inter);
+                _goalsByBox.Add(box, goals);
+                _rotationTimeByBox.Add(box, rotationTime);
 
                 FitnessInfo fitness = new FitnessInfo(fit, fit);
                 _fitnessByBox.Add(box, fitness);
@@ -81,6 +87,30 @@ namespace UnitySharpNEAT
                 int inter = _interactionsByBox[phenome];
                 _interactionsByBox.Remove(phenome);
                 return inter;
+            }
+
+            return 0;
+        }
+
+        public int GetGoals(IBlackBox phenome)
+        {
+            if (_goalsByBox.ContainsKey(phenome))
+            {
+                int goals = _goalsByBox[phenome];
+                _goalsByBox.Remove(phenome);
+                return goals;
+            }
+
+            return 0;
+        }
+
+        public float GetRotationTime(IBlackBox phenome)
+        {
+            if (_rotationTimeByBox.ContainsKey(phenome))
+            {
+                float time = _rotationTimeByBox[phenome];
+                _rotationTimeByBox.Remove(phenome);
+                return time;
             }
 
             return 0;

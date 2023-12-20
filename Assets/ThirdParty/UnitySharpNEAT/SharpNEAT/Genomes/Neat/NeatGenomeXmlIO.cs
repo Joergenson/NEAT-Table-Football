@@ -47,6 +47,8 @@ namespace SharpNeat.Genomes.Neat
         const string __AttrBirthGeneration = "birthGen";
         const string __AttrFitness = "fitness";
         const string __AttrInteractions = "interactions";
+        const string __AttrGoals = "goals";
+        const string __AttrRotationTime = "rotationTime";
         const string __AttrType = "type";
         const string __AttrSourceId = "src";
         const string __AttrTargetId = "tgt";
@@ -231,6 +233,8 @@ namespace SharpNeat.Genomes.Neat
             xw.WriteAttributeString(__AttrBirthGeneration, genome.BirthGeneration.ToString(NumberFormatInfo.InvariantInfo));
             xw.WriteAttributeString(__AttrFitness, genome.EvaluationInfo.Fitness.ToString("R", NumberFormatInfo.InvariantInfo));
             xw.WriteAttributeString(__AttrInteractions, genome.EvaluationInfo.Interactions.ToString());
+            xw.WriteAttributeString(__AttrGoals, genome.EvaluationInfo.Goals.ToString());
+            xw.WriteAttributeString(__AttrRotationTime, genome.EvaluationInfo.RotationTime.ToString("R", NumberFormatInfo.InvariantInfo));
 
             // Emit nodes.
             StringBuilder sb = new StringBuilder();

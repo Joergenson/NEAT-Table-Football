@@ -188,12 +188,40 @@ namespace UnitySharpNEAT
                 _blackBoxMap[box].AddFitness(fit);
             }
         }
+
+        public Stick[] GetSticks(IBlackBox box)
+        {
+            if (_blackBoxMap.ContainsKey(box))
+            {
+                return _blackBoxMap[box].GetSticks();
+            }
+
+            return null;
+        }
+
+        public void SetSticks(IBlackBox box,Stick[] sticks)
+        {
+            if (_blackBoxMap.ContainsKey(box) && sticks != null)
+            {
+                _blackBoxMap[box].SetEnemySticks(sticks);
+            }
+        }
         
         public int GetInteractions(IBlackBox box)
         {
             if (_blackBoxMap.ContainsKey(box))
             {
                 return _blackBoxMap[box].GetInteractions();
+            }
+
+            return 0;
+        }
+        
+        public float GetRotations(IBlackBox box)
+        {
+            if (_blackBoxMap.ContainsKey(box))
+            {
+                return _blackBoxMap[box].GetRotationTime();
             }
 
             return 0;
