@@ -29,10 +29,6 @@ namespace UnitySharpNEAT
             {
                 _neatSupervisor.StopEvolution();
             }
-            if (GUI.Button(new Rect(10, 110, 110, 40), "Run best"))
-            {
-                _neatSupervisor.RunBest();
-            }
             if (GUI.Button(new Rect(10, 160, 110, 40), "Delete Saves"))
             {
                 ExperimentIO.DeleteAllSaveFiles(_neatSupervisor.Experiment);
